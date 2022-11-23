@@ -105,8 +105,8 @@
 		'merchant_id' => $merchant_id,
     	);
 		wp_localize_script($this->plugin_name, 'my_key', $scriptData);
-		//wp_enqueue_script( 'custom', 'https://assets.pataa.com/create-pataa-minified/create-pataa.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( 'custom', 'https://pataa.in/pataaweb/developer/create-pataa.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'custom', 'https://assets.pataa.com/create-pataa-minified/create-pataa.js', array( 'jquery' ), $this->version, false );
+		//wp_enqueue_script( 'custom', 'https://pataa.in/pataaweb/developer/create-pataa.js', array( 'jquery' ), $this->version, false );
 		
 
 	}
@@ -132,6 +132,70 @@
 	public function custom_orders_list_column_content( $column, $post_id )
 	{
 		global $post, $the_order;
+		global $allowedposttags;
+$allowed_atts = array(
+	'align'      => array(),
+	'class'      => array(),
+	'type'       => array(),
+	'id'         => array(),
+	'dir'        => array(),
+	'lang'       => array(),
+	'style'      => array(),
+	'xml:lang'   => array(),
+	'src'        => array(),
+	'alt'        => array(),
+	'href'       => array(),
+	'rel'        => array(),
+	'rev'        => array(),
+	'target'     => array(),
+	'novalidate' => array(),
+	'type'       => array(),
+	'value'      => array(),
+	'name'       => array(),
+	'tabindex'   => array(),
+	'action'     => array(),
+	'method'     => array(),
+	'for'        => array(),
+	'width'      => array(),
+	'height'     => array(),
+	'data'       => array(),
+	'title'      => array(),
+);
+$allowedposttags['form']     = $allowed_atts;
+$allowedposttags['label']    = $allowed_atts;
+$allowedposttags['input']    = $allowed_atts;
+$allowedposttags['textarea'] = $allowed_atts;
+$allowedposttags['iframe']   = $allowed_atts;
+$allowedposttags['script']   = $allowed_atts;
+$allowedposttags['style']    = $allowed_atts;
+$allowedposttags['strong']   = $allowed_atts;
+$allowedposttags['small']    = $allowed_atts;
+$allowedposttags['table']    = $allowed_atts;
+$allowedposttags['span']     = $allowed_atts;
+$allowedposttags['abbr']     = $allowed_atts;
+$allowedposttags['code']     = $allowed_atts;
+$allowedposttags['pre']      = $allowed_atts;
+$allowedposttags['div']      = $allowed_atts;
+$allowedposttags['img']      = $allowed_atts;
+$allowedposttags['h1']       = $allowed_atts;
+$allowedposttags['h2']       = $allowed_atts;
+$allowedposttags['h3']       = $allowed_atts;
+$allowedposttags['h4']       = $allowed_atts;
+$allowedposttags['h5']       = $allowed_atts;
+$allowedposttags['h6']       = $allowed_atts;
+$allowedposttags['ol']       = $allowed_atts;
+$allowedposttags['ul']       = $allowed_atts;
+$allowedposttags['li']       = $allowed_atts;
+$allowedposttags['em']       = $allowed_atts;
+$allowedposttags['hr']       = $allowed_atts;
+$allowedposttags['br']       = $allowed_atts;
+$allowedposttags['tr']       = $allowed_atts;
+$allowedposttags['td']       = $allowed_atts;
+$allowedposttags['p']        = $allowed_atts;
+$allowedposttags['a']        = $allowed_atts;
+$allowedposttags['b']        = $allowed_atts;
+$allowedposttags['i']        = $allowed_atts;
+
 
 		$order_id = $the_order->get_id();
 		
@@ -153,15 +217,15 @@
 					$display[$item_id] = $meta_value;
 				}
 				// Testing output
-				echo implode(' | ', $meta_value);
-	
+				echo wp_kses(implode(' | ', $meta_value),$allowedposttags);
+
 				break;
 	
 			case 'dlink' :
 				// Get custom post meta data
 				$my_var_two = wc_get_order_item_meta( $post_id, 'dlink', true );
 				if(!empty($my_var_two))
-					echo $my_var_two;
+				echo wp_kses($my_var_two,$allowedposttags);
 				break;
 		}
 	}
@@ -411,7 +475,7 @@ echo apply_filters( 'lpac_map_markup', $markup, $user_id );
 		 $dir=plugin_dir_url(__FILE__);
 		$markup = '<div class="autofill-container">
 			<div class="pataa-section">
-				<div class="pataa-input-heading">AUTOFILL your $title address</div>
+				<div class="pataa-input-heading">AUTOFILL your '.$title.' address</div>
 				<div class="main-pataa-code position-relative" id="main-code">
 				
 					<div class="pataa-code">
