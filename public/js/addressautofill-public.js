@@ -1,5 +1,5 @@
 jQuery(function ($) {
-	'use strict';
+
 
 	/**
 	 * All of the code for your public-facing JavaScript source
@@ -28,6 +28,34 @@ jQuery(function ($) {
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
+
+	const countryNames = {
+		"Virgin Island":"Virgin Islands (US)",
+		"British Virgin Islands":"Virgin Islands (British)",
+		"Czech":"Czech Republic",
+		"Niue Island":"Niue",
+		"Trinidad & Tobago":"Trinidad and Tobago",
+		"Netherlands Antilles":"Netherlands",
+		"French Southern and Antarctic Lands":"France",
+		"French Southern and Antarctic Lands":"French Guiana",
+		"French Southern and Antarctic Lands":"French Polynesia",
+		"French Southern and Antarctic Lands":"French Southern Territories",
+		"Democratic Republic of Congo":"Congo (Brazzaville)",
+		"Democratic Republic of Congo":"Congo (Kinshasa)",
+		"Wales (United kingdom -UK)":"United Kingdom (UK)",
+		"England (United kingdom -UK)":"United Kingdom (UK)",
+		"Northern Ireland (United kingdom -UK)":"United Kingdom (UK)",
+		"Scotland (United kingdom -UK)":"United Kingdom (UK)",
+		"United Arab Emirates (UAE)":"United Arab Emirates",
+	};
+	
+	function getCountryName(country) {
+		if (country in countryNames) {
+		  return countryNames[country];
+		} else {
+		  return country;
+		}
+	  }
 
 	var ua = navigator.userAgent.toLowerCase();
 	var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
@@ -261,9 +289,23 @@ jQuery(function ($) {
 		if(pataacode.length<=6)
 		{
 			var req_obj= localStorage.getItem("res_obj");
+			if(req_obj)
+				{
+					req_obj=JSON.parse(req_obj);
+				}
+			else
+				{
+					req_obj={}
+					req_obj.type="";
+				}
+			/*if(req_obj!="")
+				{
+					req_obj=JSON.parse(req_obj);
+				}*/
+			req_obj.type=my_key.type;
 			var innerDiv = document.createElement('div');
 			document.getElementById("create-pataa-content").appendChild(innerDiv);
-			innerDiv.innerHTML = "<create-pataa auto-Fill-Pataa-Code='"+req_obj+"'></create-pataa>";
+			innerDiv.innerHTML = "<create-pataa auto-Fill-Pataa-Code='"+JSON.stringify(req_obj)+"'></create-pataa>";
 			var originalDOM="";
 			var button = document.querySelector('create-pataa');
 			if(button !== null)
@@ -272,6 +314,9 @@ jQuery(function ($) {
 				let text1 = "^";
 					console.log(event.detail);
 				let value = text1.concat(event.detail.pataaCode.toUpperCase());
+				event.detail.type = my_key.type;
+
+				console.log(event.detail);
 				localStorage.setItem("res_obj", JSON.stringify(event.detail));
 				document.getElementById('pataacode').value = value;
 				document.getElementById('close-btn').click();
@@ -336,6 +381,18 @@ jQuery(function ($) {
 						let add_1 ="^"+pataacode+", " +add1+  add2 + add3 + response.result.pataa.address4
 						add_1 = add_1.replace(/(\s*,?\s*)*$/, "");
 						console.log(response);
+
+						//ADDED BY RAHUL
+						console.log(response.result.pataa.country_name);
+
+						/*
+						if(response.result && response.result.pataa && response.result.pataa.country_name){
+                            var countryName = response.result.pataa.country_name;
+                            if(commonLibrary.countryNames[countryName]){
+                                response.result.pataa.country_name = commonLibrary.countryNames[countryName];
+                            }
+                        }*/
+
 						$('#billing_first_name').val(response.result.user.first_name);
 						$('#billing_last_name').val(response.result.user.last_name);
 						$('#billing_address_1').val(add_1);
@@ -516,6 +573,16 @@ jQuery(function ($) {
 						let add_1 ="^"+pataacode+", " +add1+  add2 + add3 + response.result.pataa.address4
 						add_1 = add_1.replace(/(\s*,?\s*)*$/, "");
 						console.log(response);
+						console.log(response);
+						console.log(response.result.pataa.country_name);
+						//console.log(getCountryName("India"));
+
+						if(response.result && response.result.pataa && response.result.pataa.country_name){
+                            var countryName = response.result.pataa.country_name;
+							response.result.pataa.country_name = getCountryName(countryName);
+                           
+                        }
+						console.log(response.result.pataa.country_name);
 						$('#billing_first_name').val(response.result.user.first_name);
 						$('#billing_last_name').val(response.result.user.last_name);
 						$('#billing_address_1').val(add_1);
@@ -650,9 +717,23 @@ jQuery(function ($) {
 		$('.createPataaBtn').click(function () {
 			$('body').addClass('createpataa_body');
 			var req_obj= localStorage.getItem("res_obj");
+			/*if(req_obj!="")
+				{
+					req_obj=JSON.parse(req_obj);
+				}*/
+			if(req_obj)
+				{
+					req_obj=JSON.parse(req_obj);
+				}
+			else
+				{
+					req_obj={}
+					req_obj.type="";
+				}
+			req_obj.type=my_key.type;
 			var innerDiv = document.createElement('div');
 			document.getElementById("create-pataa-content").appendChild(innerDiv);
-			innerDiv.innerHTML = "<create-pataa auto-Fill-Pataa-Code='"+req_obj+"' ></create-pataa>";
+			innerDiv.innerHTML = "<create-pataa auto-Fill-Pataa-Code='"+JSON.stringify(req_obj)+"' ></create-pataa>";
 			$('#createPataa').animate({opacity :'1',});
 			$('.overlayBox').animate({opacity :'1',}).css({'visibility' :'visible'});
 			$('#createPataa').show();
@@ -734,11 +815,21 @@ jQuery(function ($) {
 			$('body').addClass('createpataa_body');
 			e.preventDefault();	
 			var req_obj= localStorage.getItem("res_obj");
-			console.log(req_obj);
+			if(req_obj)
+				{
+					req_obj=JSON.parse(req_obj);
+				}
+			else
+				{
+					req_obj={}
+					req_obj.type="";
+				}
+			req_obj.type=my_key.type;
+			console.log(my_key);
 			var innerDiv = document.createElement('div');
 			document.getElementById("create-pataa-content").appendChild(innerDiv);	
 			var merchant_id = my_key.merchant_id;
-			innerDiv.innerHTML = "<create-pataa auto-Fill-Pataa-Code='"+req_obj+"' partner-code='"+merchant_id+"'></create-pataa>";
+			innerDiv.innerHTML = "<create-pataa auto-Fill-Pataa-Code='"+JSON.stringify(req_obj)+"' partner-code='"+merchant_id+"'></create-pataa>";
 			$('#createPataa').animate({opacity :'1',});
 			$('.overlayBox').animate({opacity :'1',}).css({'visibility' :'visible'});
 			$('#createPataa').show();

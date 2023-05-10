@@ -28,7 +28,7 @@ Copyright 2021 Pataa Navigation Pvt Ltd.
  * Plugin Name:       Pataa Address Autofill
  * Plugin URI:       
  * Description:       This plugin will help users to fill their address using pataa code.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Pataa Navigations Pvt Ltd.
  * Author URI:        https://pataa.com
  * License:           GPL-2.0+

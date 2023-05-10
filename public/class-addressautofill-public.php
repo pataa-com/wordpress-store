@@ -2,7 +2,7 @@
 
 /**
  * The public-facing functionality of the plugin.
- *
+ *`
  * @link       https://pataa.com
  * @since      1.0.0
  *
@@ -52,7 +52,8 @@
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		add_action('woocommerce_checkout_update_order_meta','addMetatoOrders', 10, 2);
+		//add_action('woocommerce_checkout_update_order_meta','addMetatoOrders', 10, 2);
+		add_action('woocommerce_checkout_update_order_meta',array($this,'addMetatoOrders'), 10, 2);
 
 	}
 
@@ -97,12 +98,25 @@
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+
+		 //ADDED FOR DEBUGGING PURPOSE BY RAHUL ON 21-04-23
+		//$t=time();
+		//echo($t . "<br>");
+
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addressautofill-public.js', array( 'jquery' ), $this->version, false );
 		$api_key = get_option("settings_page_example_setting");
 		$merchant_id = get_option("settings_page_example_setting_1");
+
+		if(get_option("demo-radio")=='1'){
+			$type="services";
+		}
+		else{
+			$type="product";
+		}
 		$scriptData = array(
         'api_key' => $api_key,
 		'merchant_id' => $merchant_id,
+		'type'=>$type,
     	);
 		wp_localize_script($this->plugin_name, 'my_key', $scriptData);
 		wp_enqueue_script( 'custom', 'https://assets.pataa.com/create-pataa-minified/create-pataa.js', array( 'jquery' ), $this->version, false );
@@ -242,7 +256,7 @@ $allowedposttags['i']        = $allowed_atts;
 
 	public function addMetatoOrders( $order_id, $posted ) {
 		$order = wc_get_order( $order_id );
-		$order->update_meta_data( 'my_custom_meta_key', 'my data' );
+		$order->update_meta_data( 'Pataa Plugin Version', $this->version);
 		$order->save();
 	} 
 
@@ -440,6 +454,8 @@ $allowedposttags['i']        = $allowed_atts;
 			
 			function make_blank()
 			{
+
+				alert(1);
 				//document.getElementById("pataacode").value = "";
 				var element = document.getElementById("pataa-unavailable");
 				element.style.display = "none";
@@ -468,11 +484,12 @@ echo apply_filters( 'lpac_map_markup', $markup, $user_id );
 	public function autofill_on_checkout()
 	{
 		$user_id = (int) get_current_user_id();
+		 $dir=plugin_dir_url(__FILE__);
 		if(get_option("demo-radio_1")==1){
 		$type="services";
 		$title = "";
 		if(get_option("demo-radio")==1) { $type="services"; $title = "";} else { $type="delivery"; $title = "shipping";}
-		 $dir=plugin_dir_url(__FILE__);
+		
 		$markup = '<div class="autofill-container">
 			<div class="pataa-section">
 				<div class="pataa-input-heading">AUTOFILL your '.$title.' address</div>
@@ -520,6 +537,8 @@ echo apply_filters( 'lpac_map_markup', $markup, $user_id );
 			}
 else
 {
+if(get_option("demo-radio")==1) { $type="services"; } else { $type="deliveries";}
+
 	$markup = '
 		<div class="button-parent"><button class="pataa-btn-black">
 			<svg width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -539,7 +558,7 @@ else
 			</span>
 		</div>
 		<span id="edit_icon" class="edit">
-			<img class="arrow-move" src='.$dir.'img/arrow-right.svg" width="18" >
+			<img class="arrow-move" src="https://assets.pataa.com/cpimages/arrow-right.svg" width="18" >
 			</span>
 </button>
 <button id="autofill_1" hidden type="button" class="auto-fill"></button>
@@ -549,7 +568,7 @@ else
 						<p class="button-text">Please enter a valid pataa or <a href="javascript:void(0)"  class="createPataaBtn">Create now</a></p>
 					</div>
 					<div class="pataa-address-box" id="first-msg">
-						<p class="button-text">Click here to add address for faster deliveries</p>
+						<p class="button-text">Click here to add address for faster '.$type.'</p>
 					</div>
 					<div class="pataa-address-box" id="succ-msg" style="display:none;">
 						<p class="button-text"></p>
