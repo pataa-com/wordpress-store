@@ -71,8 +71,14 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 1.0.1 =
+New UI/UX.
+
 = 1.0.0 =
 Plugin release. Operate all the basic functions.
 
+== Upgrade Notice ==
+
 = 1.0.1 =
 New UI/UX.
+
