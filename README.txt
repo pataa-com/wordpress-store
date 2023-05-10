@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Address Autofill Plugin helps the customers to auto-fill their address just by entering their Pataa codes. Moreover shares the exact geo tagged location of the user with the website & helps reducing the churn rate.
 The greatest benefit that is derived by utilizing ^Pataa Address fill API is reduced churn rate, which means your users will carry out the entire checkout process and potentially return to your e-store thereby increasing brand loyalty. 
-Another great benefit of ^Pataa Address autofill API is optimized and efficient deliveries with reduced last mile costs. Timely deliveries can also potentially ensure lesser returns thereby sustaining your revenue and customers.
+Another great benefit of ^Pataa Address autofill API is optimized and efficient deliveries with reduced last mile costs. Timely deliveries can also potentially ensure lesser returns thereby sustaining your revenue and customer.
 
 == Description ==
 
