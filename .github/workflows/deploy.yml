@@ -14,7 +14,7 @@ jobs:
     - name: Install SVN and dependencies
       run: sudo apt-get install subversion
     - name: Deploy to WordPress.org
-      uses: pataa-com/wordpress-store@v1.0.1
+      uses: pataa-com/wordpress-store@master
       env:
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
