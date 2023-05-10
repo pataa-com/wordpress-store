@@ -1,4 +1,4 @@
-=== Address Autofill - The Plugin helps the customers to auto-fill their address . ===
+=== Address Autofill - The Plugin helps the customers to auto-fill their address ===.
 Contributors: pataa5
 Donate link: https://pataa.com
 Tags: Autofill, Address, woocommerce
