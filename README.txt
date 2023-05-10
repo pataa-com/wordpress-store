@@ -3,7 +3,7 @@ Contributors: pataa5
 Donate link: https://pataa.com
 Tags: Autofill, Address, woocommerce
 Requires at least: 3.0.1
-Tested up to: 6.1.1
+Tested up to: 6.2
 Requires PHP: 7.0
 Stable tag: 1.0.0
 License: GPLv2 or later
