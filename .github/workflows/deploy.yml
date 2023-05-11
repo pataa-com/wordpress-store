@@ -1,22 +1,22 @@
-name: Deploy
+# name: Deploy
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Install SVN and dependencies
-      run: sudo apt-get install subversion
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Install SVN and dependencies
+#       run: sudo apt-get install subversion
       
-    - name: Checkout code
-      uses: actions/checkout@v2
+#     - name: Checkout code
+#       uses: actions/checkout@v2
       
-    - name: Deploy to WordPress.org
-      uses: pataa-com/wordpress-store@main
-      env:
-        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+#     - name: Deploy to WordPress.org
+#       uses: pataa-com/wordpress-store@main
+#       env:
+#         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+#         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
